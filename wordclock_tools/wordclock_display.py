@@ -26,7 +26,8 @@ class wordclock_display:
             print('WARNING: Brightness value not set in config-file: To do so, add a "brightness" between 1..255 to the [wordclock_display]-section.')
             brightness = 255
         try:
-            self.strip = Adafruit_NeoPixel(self.wcl.LED_COUNT, self.wcl.LED_PIN, self.wcl.LED_FREQ_HZ, self.wcl.LED_DMA, self.wcl.LED_INVERT, brightness, 0, ws.WS2811_STRIP_GRB)
+            strip_type = getattr(ws, config.get('wordclock_display', 'strip_type'))
+            self.strip = Adafruit_NeoPixel(self.wcl.LED_COUNT, self.wcl.LED_PIN, self.wcl.LED_FREQ_HZ, self.wcl.LED_DMA, self.wcl.LED_INVERT, brightness, 0, strip_type)
         except:
             print('WARNING: Your NeoPixel dependency is to old to accept customized brightness values and correct RGB-settings.')
             self.strip = Adafruit_NeoPixel(self.wcl.LED_COUNT, self.wcl.LED_PIN, self.wcl.LED_FREQ_HZ, self.wcl.LED_DMA, self.wcl.LED_INVERT)
